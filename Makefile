@@ -1,12 +1,12 @@
-## one Makefile to make them all
+## Makefile for Stat545a project, will regenerate figures and analysis
 
-all: totalWordsByFilmRace.tsv
+all: Data/gapminder_clean.tsv
 
-lotr_clean.tsv barchart*.png: lotr_raw.tsv 01_filterReorder.R
-        Rscript 01_filterReorder.R
-
-stripplot_wordsByRace_*.png totalWordsByFilmRace.tsv: lotr_clean.tsv 02_aggregatePlot.R
-        Rscript 02_aggregatePlot.R
+Data/gapminder_clean.tsv Figures/inform_*.pdf: Data/gapminderDataFiveYear.txt Code/01_informativeFiguresReorder.R
+	nohup nice -19 R --no-save < Code/01_informativeFiguresReorder.R > Log/01_log_informativeFiguresReorder.out &
+	
+##stripplot_wordsByRace_*.png totalWordsByFilmRace.tsv: lotr_clean.tsv 02_aggregatePlot.R
+## fix for tab in nohup nice -19 R --no-save < Code/02_lifeExpectancyRankingAnalysis.R > Log/02_log_02_lifeExpectancyRankingAnalysis.out &
 
 clean:
-        rm -f lotr_clean.tsv totalWordsByFilmRace.tsv *.png
+	rm -f Data/gapminder_clean.tsv  Figures/*.pdf *.pdf Log/*.out *.Rhistory
