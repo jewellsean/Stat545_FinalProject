@@ -14,7 +14,7 @@ q <- q + geom_point(aes(size = sqrt(pop/pi), fill = continent), pch = 21, show_g
             scale_size_continuous(range = c(1,40)) + facet_wrap(~continent) + 
             ggtitle(paste("Life Expectancy vs. GDP per Capita in ", jYear, sep = ""))
 
-ggsave(filename = paste("inform_lifeExpectancyVsGdpPerCap_",jYear,".pdf", sep = ""), plot = q, path = "Figures")
+ggsave(filename = paste("inform_lifeExpectancyVsGdpPerCap_",jYear,".pdf", sep = ""), plot = q, path = "Figures", width = 14.4, height = 10.9)
 
 # Second informative plot:
 
@@ -27,8 +27,6 @@ table(cleanData$continent)  #ensure that the factor has been dropped
 cleanData <- within(cleanData, continent <- reorder(continent, lifeExp))
 table(cleanData$continent)  #ensure that the factor has been reordered on lifeExp
 
-
-Write the sorted data to file for future use
 write.table(cleanData, "Data/gapminder_clean.tsv", quote = FALSE, sep = "\t", row.names = FALSE) 
 
 sessionInfo()
