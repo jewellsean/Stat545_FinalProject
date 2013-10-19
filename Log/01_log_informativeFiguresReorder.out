@@ -18,7 +18,7 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 Type 'q()' to quit R.
 
 
-Welcome at Sat Oct 19 10:57:24 2013 
+Welcome at Sat Oct 19 11:35:13 2013 
  Do some work! 
 > library(ggplot2)
 > 
@@ -43,18 +43,47 @@ Welcome at Sat Oct 19 10:57:24 2013
 +             scale_size_continuous(range = c(1,40)) + facet_wrap(~continent) + 
 +             ggtitle(paste("Life Expectancy vs. GDP per Capita in ", jYear, sep = ""))
 > 
-> ggsave(filename = paste("inform_lifeExpectancyVsGdpPerCap_",jYear,".pdf", sep = ""), plot = q, path = "Figures")
-Saving 7 x 7 in image
+> ggsave(filename = paste("inform_lifeExpectancyVsGdpPerCap_",jYear,".pdf", sep = ""), plot = q, path = "Figures", width = 14.4, height = 10.9)
 > 
 > # Second informative plot:
 > 
-> # Reorder the continents based on life expectancy: 
-> # 
+> # look at some of the plots we have done in the past. 
 > 
+> # Reorder the continents based on life expectancy, and clean data to remove Oceania 
+> cleanData <- droplevels(subset(gDat, continent != "Oceania"))
+> table(cleanData$continent)  #ensure that the factor has been dropped
+
+  Africa Americas     Asia   Europe 
+     624      300      396      360 
 > 
+> cleanData <- within(cleanData, continent <- reorder(continent, lifeExp))
+> table(cleanData$continent)  #ensure that the factor has been reordered on lifeExp
+
+  Africa     Asia Americas   Europe 
+     624      396      300      360 
 > 
-> # Write the sorted data to file for future use
-> # write.table(cleanData, "Data/gapminder_clean.tsv", quote = FALSE, sep = "\t", row.names = FALSE) 
+> write.table(cleanData, "Data/gapminder_clean.tsv", quote = FALSE, sep = "\t", row.names = FALSE) 
+> 
+> sessionInfo()
+R version 3.0.1 (2013-05-16)
+Platform: x86_64-apple-darwin10.8.0 (64-bit)
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] ggplot2_0.9.3.1
+
+loaded via a namespace (and not attached):
+ [1] colorspace_1.2-2   dichromat_2.0-0    digest_0.6.3       grid_3.0.1        
+ [5] gtable_0.1.2       labeling_0.2       MASS_7.3-26        munsell_0.4.2     
+ [9] plyr_1.8           proto_0.3-10       RColorBrewer_1.0-5 reshape2_1.2.2    
+[13] scales_0.2.3       stringr_0.6.2     
+> Sys.time()
+[1] "2013-10-19 11:35:14 PDT"
 > 
 
-That was fun...  Sat Oct 19 10:57:25 2013 
+That was fun...  Sat Oct 19 11:35:14 2013 
