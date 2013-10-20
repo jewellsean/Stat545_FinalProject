@@ -1,4 +1,5 @@
 library(ggplot2)
+library(plyr)
 
 gDat <- read.delim("Data/gapminderDataFiveYear.txt")
 # Check that data import went successfully
@@ -27,6 +28,8 @@ table(cleanData$continent)  #ensure that the factor has been dropped
 cleanData <- within(cleanData, continent <- reorder(continent, lifeExp))
 table(cleanData$continent)  #ensure that the factor has been reordered on lifeExp
 
+# rearrange actual data
+cleanData <- arrange(cleanData, continent)
 write.table(cleanData, "Data/gapminder_clean.tsv", quote = FALSE, sep = "\t", row.names = FALSE) 
 
 sessionInfo()
