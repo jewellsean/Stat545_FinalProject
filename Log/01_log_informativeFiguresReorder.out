@@ -18,9 +18,10 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 Type 'q()' to quit R.
 
 
-Welcome at Sat Oct 19 11:35:13 2013 
+Welcome at Sat Oct 19 20:50:50 2013 
  Do some work! 
 > library(ggplot2)
+> library(plyr)
 > 
 > gDat <- read.delim("Data/gapminderDataFiveYear.txt")
 > # Check that data import went successfully
@@ -62,6 +63,8 @@ Welcome at Sat Oct 19 11:35:13 2013
   Africa     Asia Americas   Europe 
      624      396      300      360 
 > 
+> # rearrange actual data
+> cleanData <- arrange(cleanData, continent)
 > write.table(cleanData, "Data/gapminder_clean.tsv", quote = FALSE, sep = "\t", row.names = FALSE) 
 > 
 > sessionInfo()
@@ -75,15 +78,15 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] ggplot2_0.9.3.1
+[1] plyr_1.8        ggplot2_0.9.3.1
 
 loaded via a namespace (and not attached):
  [1] colorspace_1.2-2   dichromat_2.0-0    digest_0.6.3       grid_3.0.1        
  [5] gtable_0.1.2       labeling_0.2       MASS_7.3-26        munsell_0.4.2     
- [9] plyr_1.8           proto_0.3-10       RColorBrewer_1.0-5 reshape2_1.2.2    
-[13] scales_0.2.3       stringr_0.6.2     
+ [9] proto_0.3-10       RColorBrewer_1.0-5 reshape2_1.2.2     scales_0.2.3      
+[13] stringr_0.6.2     
 > Sys.time()
-[1] "2013-10-19 11:35:14 PDT"
+[1] "2013-10-19 20:50:51 PDT"
 > 
 
-That was fun...  Sat Oct 19 11:35:14 2013 
+That was fun...  Sat Oct 19 20:50:51 2013 
