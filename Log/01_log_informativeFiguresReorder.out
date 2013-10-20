@@ -1,0 +1,107 @@
+
+R version 3.0.1 (2013-05-16) -- "Good Sport"
+Copyright (C) 2013 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin10.8.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+
+Welcome at Sun Oct 20 00:10:14 2013 
+ Do some work! 
+> library(ggplot2)
+> library(plyr)
+> 
+> gDat <- read.delim("Data/gapminderDataFiveYear.txt")
+> # Check that data import went successfully
+> tail(gDat)
+      country year      pop continent lifeExp gdpPercap
+1699 Zimbabwe 1982  7636524    Africa  60.363  788.8550
+1700 Zimbabwe 1987  9216418    Africa  62.351  706.1573
+1701 Zimbabwe 1992 10704340    Africa  60.377  693.4208
+1702 Zimbabwe 1997 11404948    Africa  46.809  792.4500
+1703 Zimbabwe 2002 11926563    Africa  39.989  672.0386
+1704 Zimbabwe 2007 12311143    Africa  43.487  469.7093
+> 
+> # Informative plot: life expectancy vs. GDP per capita for a particular year
+> q1 <- ggplot(gDat, aes(x = gdpPercap, y = lifeExp)) + geom_point() +
++   scale_x_log10() + facet_wrap(~ continent) + geom_smooth(method = loess) + 
++   ggtitle("Life Expectancy vs. GDP per Capita")
+> 
+> ggsave(filename = "inform_lifeExpectancyVsGdpPerCap_all_loessSmooth.png", plot = q1, path = "Figures", width = 14.4, height = 10.9)
+> 
+> # Another informative plot
+> sCountry <- c("United States", "Canada", "Mexico") # North America
+> 
+> q2 <- ggplot(data = within(subset(gDat, country %in% sCountry), country <- reorder(country, lifeExp))
++              , aes(x = country, y = lifeExp)) + geom_boxplot() + geom_jitter() +
++   ggtitle("Life Expectancy measures of spread for select countries")
+> ggsave(filename = "inform_lifeExpectancy_measuresOfSpread.png", plot = q2, path = "Figures", width = 14.4, height = 10.9)
+> 
+> 
+> # Informative plot: look at a particular year per continent
+> sYear <- 2002
+> 
+> q3 <- ggplot(subset(gDat, year == sYear),
++             aes(x = gdpPercap, y = lifeExp)) + scale_x_log10()
+> 
+> q3 <- q3 + geom_point(aes(size = sqrt(pop/pi), fill = continent), pch = 21, show_guide = FALSE) +
++             scale_size_continuous(range = c(1,40)) + facet_wrap(~continent) + 
++             ggtitle(paste("Life Expectancy vs. GDP per Capita in ", sYear, sep = ""))
+> 
+> ggsave(filename = paste("inform_lifeExpectancyVsGdpPerCap_",sYear,".png", sep = ""), plot = q3, path = "Figures", width = 14.4, height = 10.9)
+> 
+> # Reorder the continents based on life expectancy, and clean data to remove Oceania 
+> cleanData <- droplevels(subset(gDat, continent != "Oceania"))
+> table(cleanData$continent)  #ensure that the factor has been dropped
+
+  Africa Americas     Asia   Europe 
+     624      300      396      360 
+> 
+> cleanData <- within(cleanData, continent <- reorder(continent, lifeExp))
+> table(cleanData$continent)  #ensure that the factor has been reordered on lifeExp
+
+  Africa     Asia Americas   Europe 
+     624      396      300      360 
+> 
+> # rearrange actual data
+> cleanData <- arrange(cleanData, continent)
+> write.table(cleanData, "Data/gapminder_clean.tsv", quote = FALSE, sep = "\t", row.names = FALSE) 
+> 
+> sessionInfo()
+R version 3.0.1 (2013-05-16)
+Platform: x86_64-apple-darwin10.8.0 (64-bit)
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] plyr_1.8        ggplot2_0.9.3.1
+
+loaded via a namespace (and not attached):
+ [1] colorspace_1.2-2   dichromat_2.0-0    digest_0.6.3       grid_3.0.1        
+ [5] gtable_0.1.2       labeling_0.2       MASS_7.3-26        munsell_0.4.2     
+ [9] proto_0.3-10       RColorBrewer_1.0-5 reshape2_1.2.2     scales_0.2.3      
+[13] stringr_0.6.2     
+> Sys.time()
+[1] "2013-10-20 00:10:19 PDT"
+> 
+
+That was fun...  Sun Oct 20 00:10:19 2013 
+> proc.time()
+   user  system elapsed 
+  5.104   0.343   5.462 

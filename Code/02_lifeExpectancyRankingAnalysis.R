@@ -58,7 +58,7 @@ for (sContinent in lifeExpLM_extremes$continent){
     facet_wrap(~country) + 
     ggtitle(paste("Extreme Life Expectancy Trends in ", sContinent, sep = ""))
   
-  ggsave(filename = paste("res_extremeLifeExpectancy_",sContinent,".pdf", sep = ""), 
+  ggsave(filename = paste("res_extremeLifeExpectancy_",sContinent,".png", sep = ""), 
          plot = p, path = "Figures", width = 14.4, height = 10.9)
 }
 

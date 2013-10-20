@@ -10,7 +10,7 @@ q1 <- ggplot(gDat, aes(x = gdpPercap, y = lifeExp)) + geom_point() +
   scale_x_log10() + facet_wrap(~ continent) + geom_smooth(method = loess) + 
   ggtitle("Life Expectancy vs. GDP per Capita")
 
-ggsave(filename = "inform_lifeExpectancyVsGdpPerCap_all_loessSmooth.pdf", plot = q1, path = "Figures", width = 14.4, height = 10.9)
+ggsave(filename = "inform_lifeExpectancyVsGdpPerCap_all_loessSmooth.png", plot = q1, path = "Figures", width = 14.4, height = 10.9)
 
 # Another informative plot
 sCountry <- c("United States", "Canada", "Mexico") # North America
@@ -18,7 +18,7 @@ sCountry <- c("United States", "Canada", "Mexico") # North America
 q2 <- ggplot(data = within(subset(gDat, country %in% sCountry), country <- reorder(country, lifeExp))
              , aes(x = country, y = lifeExp)) + geom_boxplot() + geom_jitter() +
   ggtitle("Life Expectancy measures of spread for select countries")
-ggsave(filename = "inform_lifeExpectancy_measuresOfSpread.pdf", plot = q1, path = "Figures", width = 14.4, height = 10.9)
+ggsave(filename = "inform_lifeExpectancy_measuresOfSpread.png", plot = q2, path = "Figures", width = 14.4, height = 10.9)
 
 
 # Informative plot: look at a particular year per continent
@@ -31,7 +31,7 @@ q3 <- q3 + geom_point(aes(size = sqrt(pop/pi), fill = continent), pch = 21, show
             scale_size_continuous(range = c(1,40)) + facet_wrap(~continent) + 
             ggtitle(paste("Life Expectancy vs. GDP per Capita in ", sYear, sep = ""))
 
-ggsave(filename = paste("inform_lifeExpectancyVsGdpPerCap_",sYear,".pdf", sep = ""), plot = q3, path = "Figures", width = 14.4, height = 10.9)
+ggsave(filename = paste("inform_lifeExpectancyVsGdpPerCap_",sYear,".png", sep = ""), plot = q3, path = "Figures", width = 14.4, height = 10.9)
 
 # Reorder the continents based on life expectancy, and clean data to remove Oceania 
 cleanData <- droplevels(subset(gDat, continent != "Oceania"))

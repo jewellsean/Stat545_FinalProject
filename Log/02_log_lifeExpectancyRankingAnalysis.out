@@ -1,0 +1,122 @@
+
+R version 3.0.1 (2013-05-16) -- "Good Sport"
+Copyright (C) 2013 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin10.8.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+
+Welcome at Sun Oct 20 00:10:26 2013 
+ Do some work! 
+> library(ggplot2)
+> library(plyr)
+> 
+> dat <- read.delim("Data/gapminder_clean.tsv")
+> tail(dat)
+            country year      pop continent lifeExp gdpPercap
+1675 United Kingdom 1982 56339704    Europe  74.040  18232.42
+1676 United Kingdom 1987 56981620    Europe  75.007  21664.79
+1677 United Kingdom 1992 57866349    Europe  76.420  22705.09
+1678 United Kingdom 1997 58808266    Europe  77.218  26074.53
+1679 United Kingdom 2002 59912431    Europe  78.471  29479.00
+1680 United Kingdom 2007 60776238    Europe  79.425  33203.26
+> ## infer order of continent from order in file
+> dat <-
++   within(dat, {
++     continent <- factor(as.character(continent), levels = unique(dat$continent))
++     })
+> ## JB's warning on this method for reordering factors: 
+> ## WARNING: probably not a safe long-run strategy for communicating factor level
+> ## order with plain text data files; I see no guarantees that unique() return 
+> ## value will be in any particular order; I have just noticed anecdotally that
+> ## return value is in order of appearance
+> 
+> table(dat$continent) # ensure that the ordering is still in place
+
+  Africa     Asia Americas   Europe 
+     624      396      300      360 
+> 
+> ## linear regression with coefficients
+> yearMin <- min(dat$year)
+> LifeExpRegression <- function(x) {
++   fit <- lm(lifeExp ~ I(year - yearMin), x)
++   estCoefs <- fit$coefficients
++   return(data.frame(int = estCoefs[1], m = estCoefs[2], 
++                     sd = sqrt(deviance(fit)/df.residual(fit)), 
++                     maxResid = max(abs(resid(fit)))))
++ }
+> 
+> lifeExpLM_all <- ddply(dat, ~country + continent, LifeExpRegression)
+> write.table(lifeExpLM_all, "Results/lifeExpLM_all.tsv", quote = FALSE, sep = "\t", row.names = FALSE) 
+> 
+> ## what are the 3-4 best and worst countries for each contient
+> ## I use the same metric that we used in class, namely the max resid 
+> ## (there are some problems with this approach, but that is not the purpose of this assignment)
+> 
+> Extremes <- function(x) {
++   m <- 3   #number of extreme values to take from the tails
++   n <- nrow(x)
++   id <- sort(x$maxResid, index.return= T)$ix
++   best <- data.frame(x[id[(n - m + 1) : n], ], extreme = "worst")
++   worst <- data.frame(x[id[1 : m], ], extreme = "best")
++   return(rbind(best,worst))
++ }
+> 
+> lifeExpLM_extremes <- ddply(lifeExpLM_all, ~ continent, Extremes)
+> 
+> write.table(lifeExpLM_extremes, "Results/lifeExpLM_extremes.tsv", quote = FALSE, sep = "\t", row.names = FALSE) 
+> 
+> ## single page figures for each continent from those extreme countries and write to file. 
+> lifeExpLM_extremesAgg <- merge(dat, lifeExpLM_extremes)
+> lifeExpLM_extremesAgg <- within(lifeExpLM_extremesAgg, country <- reorder(country, -maxResid))
+> 
+> for (sContinent in lifeExpLM_extremes$continent){
++   p <- ggplot() + geom_point(data = subset(lifeExpLM_extremesAgg, continent == sContinent),
++                              aes(x = year, y = lifeExp, color = extreme))
++   p <- p + geom_abline(aes(intercept = int - m * yearMin, slope = m), 
++                        data = subset(lifeExpLM_extremesAgg, continent == sContinent)) + 
++     facet_wrap(~country) + 
++     ggtitle(paste("Extreme Life Expectancy Trends in ", sContinent, sep = ""))
++   
++   ggsave(filename = paste("res_extremeLifeExpectancy_",sContinent,".png", sep = ""), 
++          plot = p, path = "Figures", width = 14.4, height = 10.9)
++ }
+> 
+> sessionInfo()
+R version 3.0.1 (2013-05-16)
+Platform: x86_64-apple-darwin10.8.0 (64-bit)
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] plyr_1.8        ggplot2_0.9.3.1
+
+loaded via a namespace (and not attached):
+ [1] colorspace_1.2-2   dichromat_2.0-0    digest_0.6.3       grid_3.0.1        
+ [5] gtable_0.1.2       labeling_0.2       MASS_7.3-26        munsell_0.4.2     
+ [9] proto_0.3-10       RColorBrewer_1.0-5 reshape2_1.2.2     scales_0.2.3      
+[13] stringr_0.6.2     
+> Sys.time()
+[1] "2013-10-20 00:11:09 PDT"
+> 
+
+That was fun...  Sun Oct 20 00:11:09 2013 
+> proc.time()
+   user  system elapsed 
+ 40.849   2.343  43.592 
