@@ -28,4 +28,19 @@ To replicate the analysis:
 
 * To remove all of the output, ie. do some cleaning go back to shell and execute `make clean`
 
+### Notes on debugging:
+
+* In experimenting with various export features in my second script  [`Code/01_informativeFiguresReorder.R`](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Code/01_informativeFiguresReorder.R), I found that there were errors producing images from the 'd_ply'call. 
+  - In particular the first image that would have been produced appeared blank
+  - Executing 'ggsave' 'png(..) print(p) dev.off()' did little to help either inside or outside of the 'd_ply' call. 
+  - The most confusing element was that the figures were successfully produced within the console on a line-by-line basis as well as when sourcing the file, but DID NOT work when using 'R CMD BATCH'
+  - Moving into another seperate debugging file, I was unable to reproduce the errors. The debugging file, ['Code/03_debugBlankFigure.R'](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Code/03_debugBlankFigure.R) imported previously written data as a starting point for the analysis. 
+  - The only difference between these two scripts is that in one (the original) the data is reordered on a levels basis and then merged with the extreme values. In the debugging script the raw file is merged. 
+  - Trying to reorder before the merge in the original file did not help, either. 
+  - My comments in the debugging file should provide more detailed information
+* I also included many different saving methods that were attempted in the original script, all of which work in the debugging. 
+* The debugging figures are located [here](https://github.com/jewellsean/Stat545_FinalProject/tree/master/Figures/Debug)
+* Big picture problem: something is going on with how the data is being processed when the plot is made in console vs. 'R CMD BATCH' which is sensitive to the input data's reordering. It is completely beyond me what is happening (and I, simply, cannot dedicate any more time to solving this issue)
+* For the record, I also tried 'Rscript' in place of 'R CMD BATCH'
+
 
