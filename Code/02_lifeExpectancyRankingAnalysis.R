@@ -44,16 +44,9 @@ write.table(lifeExpLM_extremes, "Results/lifeExpLM_extremes.tsv", quote = FALSE,
 sContinent <- "Africa"
 ggplot() + geom_point(data = subset(dat, continent == sContinent & country %in% lifeExpLM_extremes$country),
                       aes(x = year, y = lifeExp)) + 
-  geom_abline(aes(intercept = int, slope = m), data = subset(lifeExpLM_extremes, continent == sContinent)) + 
+  geom_abline(aes(intercept = int - m * yearMin, slope = m), data = subset(lifeExpLM_extremes, continent == sContinent)) + 
                 facet_wrap(~country)
 
-## This was annoying to do, and the easier way is to use the built in smooth functions in ggplot2
-## however, there may be instances in the future when I will need this functionality
-## This helped in the debugging: http://stackoverflow.com/questions/11846295/how-to-add-different-lines-for-facets
-## error in having the factor level with the same name as the mapping in aes
-
-
-# give scatterplots of life exp vs year :: panelling/facetting on country, fitted line overlaid.
 
 sessionInfo()
 Sys.time()
