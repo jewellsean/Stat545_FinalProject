@@ -11,7 +11,7 @@ Results/lifeExpLM_*.tsv Figures/res_*.pdf: Data/gapminder_clean.tsv Code/02_life
 	Rscript -e "knitr::stitch_rhtml('Code/02_lifeExpectancyRankingAnalysis.R', output = 'Web/02_lifeExpectancyRankingAnalysis.html')";
 
 clean:
-	rm -f Data/gapminder_clean.tsv  Figures/*.pdf *.pdf Log/*.out *.Rhistory *.out Results/* *html *md Web/*
+	rm -f Data/gapminder_clean.tsv  Figures/*.pdf *.pdf Log/*.out *.Rhistory *.out Results/* *html Web/*
 
 
 
