@@ -8,23 +8,23 @@ I use the Gapminder data to perform the basic pipeline assembly. Since we are al
 
 To replicate the analysis: 
 * Download the following files locally: 
-- Input data: [`Data/gapminderDataFiveYear.txt`](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Data/gapminderDataFiveYear.txt)
-- Scripts: [`Code/01_informativeFiguresReorder.R`](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Code/01_informativeFiguresReorder.R) and [`Code/02_lifeExpectancyRankingAnalysis.R`](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Code/02_lifeExpectancyRankingAnalysis.R)
-- Makefile: [`Makefile`](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Makefile)
+  - Input data: [`Data/gapminderDataFiveYear.txt`](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Data/gapminderDataFiveYear.txt)
+  - Scripts: [`Code/01_informativeFiguresReorder.R`](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Code/01_informativeFiguresReorder.R) and [`Code/02_lifeExpectancyRankingAnalysis.R`](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Code/02_lifeExpectancyRankingAnalysis.R)
+  - Makefile: [`Makefile`](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Makefile)
 
-* In a shell (be careful Windows people, I`ve used subdirectories and the delimiting will be different on your machine) run `make all`
+* In a shell (be careful Windows people, I've used subdirectories and the delimiting will be different on your machine) run `make all` to generate the following list of files
 
 * New files after running this pipeline: 
-- [`Data/gapminder_clean.tsv`](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Data/gapminder_clean.tsv)
-- [`Figures/inform_lifeExpectancyVsGdpPerCap_2002.png`](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Figures/inform_lifeExpectancyVsGdpPerCap_2002.png)
-- [`Figures/inform_lifeExpectancyVsGdpPerCap_all_loessSmooth.png`](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Figures/inform_lifeExpectancyVsGdpPerCap_all_loessSmooth.png)
-- [`Figures/inform_lifeExpectancy_measuresOfSpread.png`](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Figures/inform_lifeExpectancy_measuresOfSpread.png)
-- [`Figures/res_extremeLifeExpectancy_Africa.png`](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Figures/res_extremeLifeExpectancy_Africa.png)
-- [`Figures/res_extremeLifeExpectancy_Asia.png`](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Figures/res_extremeLifeExpectancy_Asia.png)
-- [`Figures/res_extremeLifeExpectancy_Asia.png`](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Figures/res_extremeLifeExpectancy_Asia.png)
-- [`Figures/res_extremeLifeExpectancy_Europe.png`](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Figures/res_extremeLifeExpectancy_Europe.png)
-- [`Web/01_informativeFiguresReorder.html`](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Web/01_informativeFiguresReorder.html)
-- [`Web/02_lifeExpectancyRankingAnalysis.html`](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Web/02_lifeExpectancyRankingAnalysis.html)
+  - [`Data/gapminder_clean.tsv`](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Data/gapminder_clean.tsv)
+  - [`Figures/inform_lifeExpectancyVsGdpPerCap_2002.png`](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Figures/inform_lifeExpectancyVsGdpPerCap_2002.png)
+  - [`Figures/inform_lifeExpectancyVsGdpPerCap_all_loessSmooth.png`](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Figures/inform_lifeExpectancyVsGdpPerCap_all_loessSmooth.png)
+  - [`Figures/inform_lifeExpectancy_measuresOfSpread.png`](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Figures/inform_lifeExpectancy_measuresOfSpread.png)
+  - [`Figures/res_extremeLifeExpectancy_Africa.png`](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Figures/res_extremeLifeExpectancy_Africa.png)
+  - [`Figures/res_extremeLifeExpectancy_Americas.png`](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Figures/res_extremeLifeExpectancy_Americas.png)
+  - [`Figures/res_extremeLifeExpectancy_Asia.png`](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Figures/res_extremeLifeExpectancy_Asia.png)
+  - [`Figures/res_extremeLifeExpectancy_Europe.png`](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Figures/res_extremeLifeExpectancy_Europe.png)
+  - [`Web/01_informativeFiguresReorder.html`](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Web/01_informativeFiguresReorder.html)
+  - [`Web/02_lifeExpectancyRankingAnalysis.html`](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Web/02_lifeExpectancyRankingAnalysis.html)
 
 * To remove all of the output, ie. do some cleaning go back to shell and execute `make clean`
 

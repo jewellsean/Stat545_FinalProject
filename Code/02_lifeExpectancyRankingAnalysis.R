@@ -50,7 +50,8 @@ write.table(lifeExpLM_extremes, "Results/lifeExpLM_extremes.tsv", quote = FALSE,
 lifeExpLM_extremesAgg <- merge(dat, lifeExpLM_extremes)
 lifeExpLM_extremesAgg <- within(lifeExpLM_extremesAgg, country <- reorder(country, -maxResid))
 
-for (sContinent in lifeExpLM_extremes$continent){
+d_ply(lifeExpLM_extremesAgg, ~ continent, function(z){
+  sContinent <- z$continent[1]
   p <- ggplot() + geom_point(data = subset(lifeExpLM_extremesAgg, continent == sContinent),
                              aes(x = year, y = lifeExp, color = extreme))
   p <- p + geom_abline(aes(intercept = int - m * yearMin, slope = m), 
@@ -58,9 +59,14 @@ for (sContinent in lifeExpLM_extremes$continent){
     facet_wrap(~country) + 
     ggtitle(paste("Extreme Life Expectancy Trends in ", sContinent, sep = ""))
   
-  ggsave(filename = paste("res_extremeLifeExpectancy_",sContinent,".png", sep = ""), 
+    ggsave(filename = paste("res_extremeLifeExpectancy_",sContinent,".png", sep = ""), 
          plot = p, path = "Figures", width = 14.4, height = 10.9)
-}
+  
+  
+  # png(filename = paste("Figures/res_extremeLifeExpectancy_",sContinent,".png", sep = ""))
+  # print(p)
+  # dev.off()
+})
 
 sessionInfo()
 Sys.time()

@@ -129,7 +129,8 @@
 <span class="hl com">## single page figures for each continent from those extreme countries and write to file.</span>
 <span class="hl std">lifeExpLM_extremesAgg</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">merge</span><span class="hl std">(dat, lifeExpLM_extremes)</span>
 <span class="hl std">lifeExpLM_extremesAgg</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">within</span><span class="hl std">(lifeExpLM_extremesAgg, country</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">reorder</span><span class="hl std">(country,</span> <span class="hl opt">-</span><span class="hl std">maxResid))</span>
-<span class="hl kwa">for</span> <span class="hl std">(sContinent</span> <span class="hl kwa">in</span> <span class="hl std">lifeExpLM_extremes</span><span class="hl opt">$</span><span class="hl std">continent) {</span>
+<span class="hl kwd">d_ply</span><span class="hl std">(lifeExpLM_extremesAgg,</span> <span class="hl opt">~</span><span class="hl std">continent,</span> <span class="hl kwa">function</span><span class="hl std">(</span><span class="hl kwc">z</span><span class="hl std">) {</span>
+    <span class="hl std">sContinent</span> <span class="hl kwb">&lt;-</span> <span class="hl std">z</span><span class="hl opt">$</span><span class="hl std">continent[</span><span class="hl num">1</span><span class="hl std">]</span>
     <span class="hl std">p</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">ggplot</span><span class="hl std">()</span> <span class="hl opt">+</span> <span class="hl kwd">geom_point</span><span class="hl std">(</span><span class="hl kwc">data</span> <span class="hl std">=</span> <span class="hl kwd">subset</span><span class="hl std">(lifeExpLM_extremesAgg, continent</span> <span class="hl opt">==</span> <span class="hl std">sContinent),</span>
         <span class="hl kwd">aes</span><span class="hl std">(</span><span class="hl kwc">x</span> <span class="hl std">= year,</span> <span class="hl kwc">y</span> <span class="hl std">= lifeExp,</span> <span class="hl kwc">color</span> <span class="hl std">= extreme))</span>
     <span class="hl std">p</span> <span class="hl kwb">&lt;-</span> <span class="hl std">p</span> <span class="hl opt">+</span> <span class="hl kwd">geom_abline</span><span class="hl std">(</span><span class="hl kwd">aes</span><span class="hl std">(</span><span class="hl kwc">intercept</span> <span class="hl std">= int</span> <span class="hl opt">-</span> <span class="hl std">m</span> <span class="hl opt">*</span> <span class="hl std">yearMin,</span> <span class="hl kwc">slope</span> <span class="hl std">= m),</span> <span class="hl kwc">data</span> <span class="hl std">=</span> <span class="hl kwd">subset</span><span class="hl std">(lifeExpLM_extremesAgg,</span>
@@ -137,7 +138,9 @@
         <span class="hl std">sContinent,</span> <span class="hl kwc">sep</span> <span class="hl std">=</span> <span class="hl str">&quot;&quot;</span><span class="hl std">))</span>
     <span class="hl kwd">ggsave</span><span class="hl std">(</span><span class="hl kwc">filename</span> <span class="hl std">=</span> <span class="hl kwd">paste</span><span class="hl std">(</span><span class="hl str">&quot;res_extremeLifeExpectancy_&quot;</span><span class="hl std">, sContinent,</span> <span class="hl str">&quot;.png&quot;</span><span class="hl std">,</span> <span class="hl kwc">sep</span> <span class="hl std">=</span> <span class="hl str">&quot;&quot;</span><span class="hl std">),</span> <span class="hl kwc">plot</span> <span class="hl std">= p,</span>
         <span class="hl kwc">path</span> <span class="hl std">=</span> <span class="hl str">&quot;Figures&quot;</span><span class="hl std">,</span> <span class="hl kwc">width</span> <span class="hl std">=</span> <span class="hl num">14.4</span><span class="hl std">,</span> <span class="hl kwc">height</span> <span class="hl std">=</span> <span class="hl num">10.9</span><span class="hl std">)</span>
-<span class="hl std">}</span>
+    <span class="hl com"># png(filename = paste('Figures/res_extremeLifeExpectancy_',sContinent,'.png', sep = ''))</span>
+    <span class="hl com"># print(p) dev.off()</span>
+<span class="hl std">})</span>
 </pre></div>
 <div class="error"><pre class="knitr r">## Error: object 'yearMin' not found
 </pre></div>
@@ -164,7 +167,7 @@
 </pre></div>
 <div class="source"><pre class="knitr r"><span class="hl kwd">Sys.time</span><span class="hl std">()</span>
 </pre></div>
-<div class="output"><pre class="knitr r">## [1] "2013-10-20 00:11:12 PDT"
+<div class="output"><pre class="knitr r">## [1] "2013-10-20 01:11:10 PDT"
 </pre></div>
 </div></div>
 
@@ -195,7 +198,7 @@
 </pre></div>
 <div class="source"><pre class="knitr r"><span class="hl kwd">Sys.time</span><span class="hl std">()</span>
 </pre></div>
-<div class="output"><pre class="knitr r">## [1] "2013-10-20 00:11:12 PDT"
+<div class="output"><pre class="knitr r">## [1] "2013-10-20 01:11:10 PDT"
 </pre></div>
 </div></div>
 
