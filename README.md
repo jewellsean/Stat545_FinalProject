@@ -3,7 +3,7 @@ Stat545 FinalProject
 
 Final project for Stat545A at UBC with J.Bryan. This project is based on building an automated pipeline for research. As such the content of the tables, figures, and subsequent results are not the focus. The focus instead is based on designing a pipeline with make, github, RStudio and Knitr. Throughout the building process I have been using [Sourcetree](http://www.sourcetreeapp.com/) to commit early stage development (and pushing commits to github). 
 
-I use the Gapminder data to perform the basic pipeline assembly. Since we are all intimately familiar with the dataset I will not go into any detail describing the various characteristcs. The figures and other inspiration came from JBs in class meetings and my own assignments. 
+I use the Gapminder data to perform the basic pipeline assembly. Since we are all intimately familiar with the dataset I will not go into any detail describing the various characteristics. The figures and other inspiration came from JBs in class meetings and my own assignments. 
 
 
 To replicate the analysis: 
@@ -12,7 +12,7 @@ To replicate the analysis:
   - Scripts: [`Code/01_informativeFiguresReorder.R`](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Code/01_informativeFiguresReorder.R) and [`Code/02_lifeExpectancyRankingAnalysis.R`](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Code/02_lifeExpectancyRankingAnalysis.R)
   - Makefile: [`Makefile`](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Makefile)
 
-* In a shell (be careful Windows people, I've used subdirectories and the delimiting will be different on your machine) run `make all` to generate the following list of files
+* In a shell (be careful Windows people, I've used sub-directories and the delimiting will be different on your machine) run `make all` to generate the following list of files
 
 * New files after running this pipeline: 
   - [`Data/gapminder_clean.tsv`](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Data/gapminder_clean.tsv)
@@ -34,7 +34,7 @@ To replicate the analysis:
   - In particular the first image that would have been produced appeared blank
   - Executing 'ggsave' 'png(..) print(p) dev.off()' did little to help either inside or outside of the 'd_ply' call. 
   - The most confusing element was that the figures were successfully produced within the console on a line-by-line basis as well as when sourcing the file, but DID NOT work when using 'R CMD BATCH'
-  - Moving into another seperate debugging file, I was unable to reproduce the errors. The debugging file, ['Code/03_debugBlankFigure.R'](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Code/03_debugBlankFigure.R) imported previously written data as a starting point for the analysis. 
+  - Moving into another separate debugging file, I was unable to reproduce the errors. The debugging file, ['Code/03_debugBlankFigure.R'](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Code/03_debugBlankFigure.R) imported previously written data as a starting point for the analysis. 
   - The only difference between these two scripts is that in one (the original) the data is reordered on a levels basis and then merged with the extreme values. In the debugging script the raw file is merged. 
   - Trying to reorder before the merge in the original file did not help, either. 
   - My comments in the debugging file should provide more detailed information
