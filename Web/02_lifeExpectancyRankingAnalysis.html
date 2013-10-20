@@ -89,8 +89,9 @@
 ## 1680 United Kingdom 2007 60776238    Europe   79.42     33203
 </pre></div>
 <div class="source"><pre class="knitr r"><span class="hl com">## infer order of continent from order in file</span>
+<span class="hl std">id</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">unique</span><span class="hl std">(dat</span><span class="hl opt">$</span><span class="hl std">continent)</span>
 <span class="hl std">dat</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">within</span><span class="hl std">(dat, {</span>
-    <span class="hl std">continent</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">factor</span><span class="hl std">(</span><span class="hl kwd">as.character</span><span class="hl std">(continent),</span> <span class="hl kwc">levels</span> <span class="hl std">=</span> <span class="hl kwd">unique</span><span class="hl std">(dat</span><span class="hl opt">$</span><span class="hl std">continent))</span>
+    <span class="hl std">continent</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">factor</span><span class="hl std">(</span><span class="hl kwd">as.character</span><span class="hl std">(continent),</span> <span class="hl kwc">levels</span> <span class="hl std">= id)</span>
 <span class="hl std">})</span>
 <span class="hl com">## JB's warning on this method for reordering factors: WARNING: probably not a safe long-run</span>
 <span class="hl com">## strategy for communicating factor level order with plain text data files; I see no</span>
@@ -126,7 +127,12 @@
 <span class="hl std">lifeExpLM_extremes</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">ddply</span><span class="hl std">(lifeExpLM_all,</span> <span class="hl opt">~</span><span class="hl std">continent, Extremes)</span>
 <span class="hl kwd">write.table</span><span class="hl std">(lifeExpLM_extremes,</span> <span class="hl str">&quot;Results/lifeExpLM_extremes.tsv&quot;</span><span class="hl std">,</span> <span class="hl kwc">quote</span> <span class="hl std">=</span> <span class="hl num">FALSE</span><span class="hl std">,</span> <span class="hl kwc">sep</span> <span class="hl std">=</span> <span class="hl str">&quot;\t&quot;</span><span class="hl std">,</span>
     <span class="hl kwc">row.names</span> <span class="hl std">=</span> <span class="hl num">FALSE</span><span class="hl std">)</span>
+<span class="hl com">## reorder before merge in an attempt to fix plotting issue:: makes no difference</span>
+<span class="hl std">lifeExpLM_extremes</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">within</span><span class="hl std">(lifeExpLM_extremes, {</span>
+    <span class="hl std">continent</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">factor</span><span class="hl std">(</span><span class="hl kwd">as.character</span><span class="hl std">(continent),</span> <span class="hl kwc">levels</span> <span class="hl std">= id)</span>
+<span class="hl std">})</span>
 <span class="hl com">## single page figures for each continent from those extreme countries and write to file.</span>
+<span class="hl com">## The error here is debugged in 03_debugBlankFigure</span>
 <span class="hl std">lifeExpLM_extremesAgg</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">merge</span><span class="hl std">(dat, lifeExpLM_extremes)</span>
 <span class="hl std">lifeExpLM_extremesAgg</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">within</span><span class="hl std">(lifeExpLM_extremesAgg, country</span> <span class="hl kwb">&lt;-</span> <span class="hl kwd">reorder</span><span class="hl std">(country,</span> <span class="hl opt">-</span><span class="hl std">maxResid))</span>
 <span class="hl kwd">d_ply</span><span class="hl std">(lifeExpLM_extremesAgg,</span> <span class="hl opt">~</span><span class="hl std">continent,</span> <span class="hl kwa">function</span><span class="hl std">(</span><span class="hl kwc">z</span><span class="hl std">) {</span>
@@ -138,8 +144,6 @@
         <span class="hl std">sContinent,</span> <span class="hl kwc">sep</span> <span class="hl std">=</span> <span class="hl str">&quot;&quot;</span><span class="hl std">))</span>
     <span class="hl kwd">ggsave</span><span class="hl std">(</span><span class="hl kwc">filename</span> <span class="hl std">=</span> <span class="hl kwd">paste</span><span class="hl std">(</span><span class="hl str">&quot;res_extremeLifeExpectancy_&quot;</span><span class="hl std">, sContinent,</span> <span class="hl str">&quot;.png&quot;</span><span class="hl std">,</span> <span class="hl kwc">sep</span> <span class="hl std">=</span> <span class="hl str">&quot;&quot;</span><span class="hl std">),</span> <span class="hl kwc">plot</span> <span class="hl std">= p,</span>
         <span class="hl kwc">path</span> <span class="hl std">=</span> <span class="hl str">&quot;Figures&quot;</span><span class="hl std">,</span> <span class="hl kwc">width</span> <span class="hl std">=</span> <span class="hl num">14.4</span><span class="hl std">,</span> <span class="hl kwc">height</span> <span class="hl std">=</span> <span class="hl num">10.9</span><span class="hl std">)</span>
-    <span class="hl com"># png(filename = paste('Figures/res_extremeLifeExpectancy_',sContinent,'.png', sep = ''))</span>
-    <span class="hl com"># print(p) dev.off()</span>
 <span class="hl std">})</span>
 </pre></div>
 <div class="error"><pre class="knitr r">## Error: object 'yearMin' not found
@@ -167,7 +171,7 @@
 </pre></div>
 <div class="source"><pre class="knitr r"><span class="hl kwd">Sys.time</span><span class="hl std">()</span>
 </pre></div>
-<div class="output"><pre class="knitr r">## [1] "2013-10-20 01:11:10 PDT"
+<div class="output"><pre class="knitr r">## [1] "2013-10-20 14:59:03 PDT"
 </pre></div>
 </div></div>
 
@@ -198,7 +202,7 @@
 </pre></div>
 <div class="source"><pre class="knitr r"><span class="hl kwd">Sys.time</span><span class="hl std">()</span>
 </pre></div>
-<div class="output"><pre class="knitr r">## [1] "2013-10-20 01:11:10 PDT"
+<div class="output"><pre class="knitr r">## [1] "2013-10-20 14:59:03 PDT"
 </pre></div>
 </div></div>
 

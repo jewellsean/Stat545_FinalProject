@@ -18,7 +18,7 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 Type 'q()' to quit R.
 
 
-Welcome at Sun Oct 20 01:10:48 2013 
+Welcome at Sun Oct 20 14:58:42 2013 
  Do some work! 
 > library(ggplot2)
 > library(plyr)
@@ -98,10 +98,10 @@ loaded via a namespace (and not attached):
  [9] proto_0.3-10       RColorBrewer_1.0-5 reshape2_1.2.2     scales_0.2.3      
 [13] stringr_0.6.2     
 > Sys.time()
-[1] "2013-10-20 01:10:53 PDT"
+[1] "2013-10-20 14:58:47 PDT"
 > 
 
-That was fun...  Sun Oct 20 01:10:53 2013 
+That was fun...  Sun Oct 20 14:58:47 2013 
 > proc.time()
    user  system elapsed 
-  5.068   0.335   5.421 
+  4.653   0.264   4.936 

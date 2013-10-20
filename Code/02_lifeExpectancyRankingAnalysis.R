@@ -4,9 +4,10 @@ library(plyr)
 dat <- read.delim("Data/gapminder_clean.tsv")
 tail(dat)
 ## infer order of continent from order in file
+id <- unique(dat$continent)
 dat <-
   within(dat, {
-    continent <- factor(as.character(continent), levels = unique(dat$continent))
+    continent <- factor(as.character(continent), levels = id)
     })
 ## JB's warning on this method for reordering factors: 
 ## WARNING: probably not a safe long-run strategy for communicating factor level
@@ -46,27 +47,32 @@ lifeExpLM_extremes <- ddply(lifeExpLM_all, ~ continent, Extremes)
 
 write.table(lifeExpLM_extremes, "Results/lifeExpLM_extremes.tsv", quote = FALSE, sep = "\t", row.names = FALSE) 
 
+## reorder before merge in an attempt to fix plotting issue:: makes no difference
+lifeExpLM_extremes <-
+  within(lifeExpLM_extremes, {
+    continent <- factor(as.character(continent), levels = id)
+  })
+
+
 ## single page figures for each continent from those extreme countries and write to file. 
+## The error here is debugged in 03_debugBlankFigure
 lifeExpLM_extremesAgg <- merge(dat, lifeExpLM_extremes)
 lifeExpLM_extremesAgg <- within(lifeExpLM_extremesAgg, country <- reorder(country, -maxResid))
 
 d_ply(lifeExpLM_extremesAgg, ~ continent, function(z){
   sContinent <- z$continent[1]
-  p <- ggplot() + geom_point(data = subset(lifeExpLM_extremesAgg, continent == sContinent),
-                             aes(x = year, y = lifeExp, color = extreme))
-  p <- p + geom_abline(aes(intercept = int - m * yearMin, slope = m), 
-                       data = subset(lifeExpLM_extremesAgg, continent == sContinent)) + 
-    facet_wrap(~country) + 
-    ggtitle(paste("Extreme Life Expectancy Trends in ", sContinent, sep = ""))
+    p <- ggplot() + geom_point(data = subset(lifeExpLM_extremesAgg, continent == sContinent),
+                               aes(x = year, y = lifeExp, color = extreme))
+    p <- p + geom_abline(aes(intercept = int - m * yearMin, slope = m), 
+                         data = subset(lifeExpLM_extremesAgg, continent == sContinent)) + 
+      facet_wrap(~country) + 
+      ggtitle(paste("Extreme Life Expectancy Trends in ", sContinent, sep = ""))  
+  ggsave(filename = paste("res_extremeLifeExpectancy_",sContinent,".png", sep = ""), 
+     plot = p, path = "Figures", width = 14.4, height = 10.9)
   
-    ggsave(filename = paste("res_extremeLifeExpectancy_",sContinent,".png", sep = ""), 
-         plot = p, path = "Figures", width = 14.4, height = 10.9)
-  
-  
-  # png(filename = paste("Figures/res_extremeLifeExpectancy_",sContinent,".png", sep = ""))
-  # print(p)
-  # dev.off()
 })
+
+
 
 sessionInfo()
 Sys.time()
