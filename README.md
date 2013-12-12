@@ -44,4 +44,9 @@ To replicate the analysis:
 * Big picture problem: something is going on with how the data is being processed when the plot is made in console vs. `R CMD BATCH` which is sensitive to the input data's reordering. It is completely beyond me what is happening (and I, simply, cannot dedicate any more time to solving this issue)
 * For the record, I also tried `Rscript` in place of `R CMD BATCH`
 
+### Embedding a PNG instead of just linking to it
 
+This is less slick and immediate: [`Figures/inform_lifeExpectancyVsGdpPerCap_2002.png`](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Figures/inform_lifeExpectancyVsGdpPerCap_2002.png)
+
+Nicer to embed:
+  ![](https://raw.github.com/jennybc/Stat545_FinalProject/master/Figures/inform_lifeExpectancyVsGdpPerCap_all_loessSmooth_SMALL.png)
