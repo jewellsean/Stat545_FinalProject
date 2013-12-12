@@ -23,9 +23,9 @@ To replicate the analysis:
   - [`Figures/res_extremeLifeExpectancy_Americas.png`](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Figures/res_extremeLifeExpectancy_Americas.png)
   - [`Figures/res_extremeLifeExpectancy_Asia.png`](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Figures/res_extremeLifeExpectancy_Asia.png)
   - [`Figures/res_extremeLifeExpectancy_Europe.png`](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Figures/res_extremeLifeExpectancy_Europe.png)
-  - [`Web/01_informativeFiguresReorder.html`](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Web/01_informativeFiguresReorder.html)
-  - [`Web/02_lifeExpectancyRankingAnalysis.html`](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Web/02_lifeExpectancyRankingAnalysis.html)
-  - [`Web/03_debugBlankFigure.html`](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Web/03_debugBlankFigure.html)
+  - `Web/01_informativeFiguresReorder.html`: [raw](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Web/01_informativeFiguresReorder.html) or [rendered](http://htmlpreview.github.com/?https://github.com/jewellsean/Stat545_FinalProject/blob/master/Web/01_informativeFiguresReorder.html)
+  - `Web/02_lifeExpectancyRankingAnalysis.html`: [raw](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Web/02_lifeExpectancyRankingAnalysis.html) or [rendered](http://htmlpreview.github.com/?https://github.com/jewellsean/Stat545_FinalProject/blob/master/Web/02_lifeExpectancyRankingAnalysis.html)
+  - `Web/03_debugBlankFigure.html`: [raw](https://github.com/jewellsean/Stat545_FinalProject/blob/master/Web/03_debugBlankFigure.html) or [rendered](http://htmlpreview.github.com/?https://github.com/jewellsean/Stat545_FinalProject/blob/master/Web/03_debugBlankFigure.html)
   
 * To remove all of the output, ie. do some cleaning go back to shell and execute `make clean`
 
