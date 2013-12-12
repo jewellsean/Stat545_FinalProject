@@ -15,7 +15,7 @@ ggsave(filename =
        q1, path = "Figures", width = 14.4, height = 10.9)
 
 ggsave(filename = "inform_lifeExpectancyVsGdpPerCap_all_loessSmooth_SMALL.png",
-       plot = q1, path = "Figures", width = 14.4/3, height = 10.9/3)
+       plot = q1, path = "Figures", width = 5, height = 3.6)
 
 # Another informative plot
 sCountry <- c("United States", "Canada", "Mexico") # North America
