@@ -7,10 +7,15 @@ tail(gDat)
 
 # Informative plot: life expectancy vs. GDP per capita for a particular year
 q1 <- ggplot(gDat, aes(x = gdpPercap, y = lifeExp)) + geom_point() +
-  scale_x_log10() + facet_wrap(~ continent) + geom_smooth(method = loess) + 
+  scale_x_log10() + facet_wrap(~ continent) + geom_smooth(method = loess) +
   ggtitle("Life Expectancy vs. GDP per Capita")
 
-ggsave(filename = "inform_lifeExpectancyVsGdpPerCap_all_loessSmooth.png", plot = q1, path = "Figures", width = 14.4, height = 10.9)
+ggsave(filename =
+       "inform_lifeExpectancyVsGdpPerCap_all_loessSmooth.png", plot =
+       q1, path = "Figures", width = 14.4, height = 10.9)
+
+ggsave(filename = "inform_lifeExpectancyVsGdpPerCap_all_loessSmooth_SMALL.png",
+       plot = q1, path = "Figures")
 
 # Another informative plot
 sCountry <- c("United States", "Canada", "Mexico") # North America
@@ -28,12 +33,12 @@ q3 <- ggplot(subset(gDat, year == sYear),
             aes(x = gdpPercap, y = lifeExp)) + scale_x_log10()
 
 q3 <- q3 + geom_point(aes(size = sqrt(pop/pi), fill = continent), pch = 21, show_guide = FALSE) +
-            scale_size_continuous(range = c(1,40)) + facet_wrap(~continent) + 
+            scale_size_continuous(range = c(1,40)) + facet_wrap(~continent) +
             ggtitle(paste("Life Expectancy vs. GDP per Capita in ", sYear, sep = ""))
 
 ggsave(filename = paste("inform_lifeExpectancyVsGdpPerCap_",sYear,".png", sep = ""), plot = q3, path = "Figures", width = 14.4, height = 10.9)
 
-# Reorder the continents based on life expectancy, and clean data to remove Oceania 
+# Reorder the continents based on life expectancy, and clean data to remove Oceania
 cleanData <- droplevels(subset(gDat, continent != "Oceania"))
 table(cleanData$continent)  #ensure that the factor has been dropped
 
@@ -42,7 +47,7 @@ table(cleanData$continent)  #ensure that the factor has been reordered on lifeEx
 
 # rearrange actual data
 cleanData <- arrange(cleanData, continent)
-write.table(cleanData, "Data/gapminder_clean.tsv", quote = FALSE, sep = "\t", row.names = FALSE) 
+write.table(cleanData, "Data/gapminder_clean.tsv", quote = FALSE, sep = "\t", row.names = FALSE)
 
 sessionInfo()
 Sys.time()
